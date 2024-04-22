@@ -3,6 +3,7 @@ WQU_Capstone_Project
 
 
 This is a graduation capstone project for MScFE Program at WorldQuant University. 
+
 Contributers: 
 1. Sai Phyo Hein
 2. Sai Anand Chandrasekaran
