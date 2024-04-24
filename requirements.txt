@@ -1,0 +1,9 @@
+duckdb
+ta
+arch
+yfinance
+pandas
+numpy 
+scikit-learn
+scipy
+tensorflow
