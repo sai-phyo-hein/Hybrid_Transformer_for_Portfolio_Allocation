@@ -38,6 +38,8 @@ def mvp_mod(selected_tick, start_date, end_date, num_portfolios=10000):
     max_sharpe_idx = np.argmax(results[2])
     optimal_weights = weights[max_sharpe_idx]
 
+    return optimal_weights
+
 def mvp_plotting(results, optimal_weights, mean_returns, cov_matrix): 
     # Plot the efficient frontier
     print("*****************************************************************************************************************")
@@ -65,7 +67,8 @@ def mvp_plotting(results, optimal_weights, mean_returns, cov_matrix):
     
     return optimal_weights
     
-    
-    
+
+if __name__ == '__main__':
+    pass
     
     
