@@ -4,7 +4,6 @@ import cvxpy as cp
 import matplotlib.pyplot as plt
 import duckdb as ddb
 import datetime
-from data_extraction import *
 
 # Function to calculate portfolio mean return and variance
 def portfolio_stats(weights, mean_returns, cov_matrix):
