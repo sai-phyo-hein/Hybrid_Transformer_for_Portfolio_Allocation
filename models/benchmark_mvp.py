@@ -26,8 +26,7 @@ def generate_random_portfolios(num_portfolios, mean_returns, cov_matrix):
     return results, weights_record
 
 
-def mvp_mod(data, start_date, end_date, num_portfolios=10000):
-    #data = get_data(selected_tick, selected_col = 'Adj Close', start_date="2014-01-01", end_date="2024-03-31")
+def mvp_mod(data, num_portfolios=10000):
     
     # Calculate mean returns and covariance matrix
     mean_returns = data.pct_change().dropna().mean()
