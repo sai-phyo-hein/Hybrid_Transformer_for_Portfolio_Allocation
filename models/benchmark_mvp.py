@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
-import cvxpy as cp
 import matplotlib.pyplot as plt
-import duckdb as ddb
 import datetime
 
 # Function to calculate portfolio mean return and variance
@@ -12,7 +10,8 @@ def portfolio_stats(weights, mean_returns, cov_matrix):
     return portfolio_return, portfolio_variance
 
 # Function to generate random portfolios
-def generate_random_portfolios(num_portfolios, mean_returns, cov_matrix):
+def generate_random_portfolios(num_portfolios, mean_returns, cov_matrix, seed):
+    np.random.seed(seed)
     results = np.zeros((3, num_portfolios))
     weights_record = []
     for i in range(num_portfolios):
@@ -26,12 +25,12 @@ def generate_random_portfolios(num_portfolios, mean_returns, cov_matrix):
     return results, weights_record
 
 
-def mvp_mod(data, num_portfolios=10000):
+def mvp_mod(data, num_portfolios=10000, seed = 42):
     
     # Calculate mean returns and covariance matrix
     mean_returns = data.pct_change().dropna().mean()
     cov_matrix = data.pct_change().dropna().cov()
-    results, weights = generate_random_portfolios(num_portfolios, mean_returns, cov_matrix)
+    results, weights = generate_random_portfolios(num_portfolios, mean_returns, cov_matrix, seed)
     
     # Find portfolio with maximum Sharpe ratio
     max_sharpe_idx = np.argmax(results[2])
