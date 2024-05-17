@@ -37,7 +37,8 @@ def mvp_mod(selected_tick, start_date, end_date, num_portfolios=10000):
     # Find portfolio with maximum Sharpe ratio
     max_sharpe_idx = np.argmax(results[2])
     optimal_weights = weights[max_sharpe_idx]
-    
+
+def mvp_plotting(results, optimal_weights, mean_returns, cov_matrix): 
     # Plot the efficient frontier
     print("*****************************************************************************************************************")
     print("*******************************Efficient Frontier & Maximum Sharpe Ratio Portfolio*******************************")
@@ -50,7 +51,7 @@ def mvp_mod(selected_tick, start_date, end_date, num_portfolios=10000):
     plt.title('Efficient Frontier')
     plt.show()
     
-    
+
     print("******************************************************************************************************************")
     print("Weights for Maximum Sharpe Ratio Portfolio")
     print("Optimal Weights:", optimal_weights)
