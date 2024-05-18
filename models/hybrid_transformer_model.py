@@ -87,16 +87,10 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
             self.outputShape, activation=tf.nn.softmax, name="Output"
         )(X)
 
-        # scaling for the constraints sum = 1
-        #Output = tf.math.divide(Output, tf.reduce_sum(Output, axis = 1, keepdims=True))
-
-        # clip the output for addressing weight bounds
-        #Output = tf.clip_by_value(Output, clip_value_min = self.lb, clip_value_max = self.ub)
         model = tf.keras.Model(inputs=Input, outputs=Output)
         #Optimizer is defined
         Opt = tf.keras.optimizers.Adam(learning_rate=self.learningRate, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False,name='Adam')
 
-        #Configuring Custom Loss Funciton with Mean Sharpe Ratio
         #Configuring Custom Loss Funciton with Mean Sharpe Ratio
         def sharpe_loss(y_true, y_pred):
             y_true = tf.concat((tf.zeros((1, y_true.shape[1]), tf.float32), y_true[1:, :]), axis = 0)
@@ -114,13 +108,22 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
         if self.model == None:
             self.model = self.Transformer_Model()
             self.model.fit(xtrainRNN, ytrainRNN, epochs = Epochs, verbose = 0, batch_size = BatchSize)
-            #return self.model.predict(xtrainRNN)
     
     def allocation_hybrid_test(self, xtestRNN):
             if self.model == None: 
                 print('Model is not trained.')
             else: 
                 return self.model.predict(xtestRNN)
+    
+    def hybrid_save_weights(self, path): 
+        return self.model.save_weights(path)
+
+    def hybrid_load_weights(self, path): 
+        if self.model == None:
+            self.model = self.Transformer_Model()
+            self.model.load_weights(path)
+        else: 
+            self.model.load_weights(path)
 
 if __name__ == '__main__': 
     pass
