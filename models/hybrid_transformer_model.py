@@ -59,17 +59,14 @@ class TransformerBlock(tf.keras.layers.Layer):
 
 
 class HybridTransformer_Portfolio(tf.keras.layers.Layer):
-    def __init__(self, shape1, shape2, outputShape, headsAttention, dropout, learningRate, priceData, ub, lb):
+    def __init__(self, shape1, shape2, outputShape, headsAttention, dropout, learningRate):
         self.shape1 = shape1
         self.shape2 = shape2
         self.outputShape = outputShape
         self.headsAttention = headsAttention
         self.dropout = dropout
         self.learningRate = learningRate
-        self.priceData = priceData
         self.model = None
-        self.ub = ub
-        self.lb = lb
 
     def Transformer_Model(self):
         #Model Structure is defined
@@ -86,7 +83,9 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
         X = tf.keras.layers.Dropout(self.dropout)(X)
         X = tf.keras.layers.Dense(64, activation=tf.nn.sigmoid)(X)
         X = tf.keras.layers.Dropout(self.dropout)(X)
-        Output = tf.keras.layers.Dense(self.outputShape, activation=tf.nn.softmax, name="Output")(X)
+        Output = tf.keras.layers.Dense(
+            self.outputShape, activation=tf.nn.softmax, name="Output"
+        )(X)
 
         # scaling for the constraints sum = 1
         #Output = tf.math.divide(Output, tf.reduce_sum(Output, axis = 1, keepdims=True))
@@ -105,7 +104,7 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
             #portfolio_returns = (portfolio_values[1:] - portfolio_values[:-1]) / portfolio_values[:-1] 
             sharpe = tf.math.divide(tf.keras.backend.mean(portfolio_returns),tf.keras.backend.std(portfolio_returns))
         
-            return -sharpe
+            return sharpe
 
         #Model is compiled
         model.compile(optimizer=Opt, loss= sharpe_loss)
