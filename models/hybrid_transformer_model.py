@@ -75,9 +75,9 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
         #Model Structure is defined
         Input = tf.keras.Input(shape = (self.shape1, self.shape2), name = 'Input')
         #LSTM is applied on top of the transformer
-        X = tf.keras.layers.LSTM(units = 32, dropout = self.dropout, return_sequences = True)(Input)
+        X = tf.keras.layers.LSTM(units = 256, dropout = self.dropout, return_sequences = True)(Input)
         #Transformer architecture is implemented
-        transformer_block_1 = TransformerBlock(embed_dim = 32, num_heads=self.headsAttention, ff_dim = 8, rate = self.dropout, )
+        transformer_block_1 = TransformerBlock(embed_dim = 256, num_heads=self.headsAttention, ff_dim = 8, rate = self.dropout, )
         X = transformer_block_1(X)
 
         #Dense layers are used
