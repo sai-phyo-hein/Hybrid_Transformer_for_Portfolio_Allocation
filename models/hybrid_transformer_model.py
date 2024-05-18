@@ -96,12 +96,13 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
         Opt = tf.keras.optimizers.Adam(learning_rate=self.learningRate, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False,name='Adam')
 
         #Configuring Custom Loss Funciton with Mean Sharpe Ratio
+        #Configuring Custom Loss Funciton with Mean Sharpe Ratio
         def sharpe_loss(y_true, y_pred):
-            #y_pred = tf.unstack(y_pred)
+            y_true = tf.concat(tf.zeros((1, y_true.shape[1])), y_true)
             portfolio_returns = tf.reduce_sum(tf.multiply(y_true, y_pred), axis=1)
             #portfolio_returns = (portfolio_values[1:] - portfolio_values[:-1]) / portfolio_values[:-1] 
             sharpe = tf.math.divide(tf.keras.backend.mean(portfolio_returns),tf.keras.backend.std(portfolio_returns))
-            
+        
             return -sharpe
 
         #Model is compiled
