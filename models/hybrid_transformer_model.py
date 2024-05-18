@@ -82,7 +82,9 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
 
         #Dense layers are used
         X = tf.keras.layers.GlobalAveragePooling1D()(X)
-        X = tf.keras.layers.Dense(8, activation=tf.nn.sigmoid)(X)
+        X = tf.keras.layers.Dense(256, activation=tf.nn.sigmoid)(X)
+        X = tf.keras.layers.Dropout(self.dropout)(X)
+        X = tf.keras.layers.Dense(64, activation=tf.nn.sigmoid)(X)
         X = tf.keras.layers.Dropout(self.dropout)(X)
         Output = tf.keras.layers.Dense(self.outputShape, activation=tf.nn.softmax, name="Output")(X)
 
