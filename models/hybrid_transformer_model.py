@@ -101,9 +101,8 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
             portfolio_returns = tf.reduce_sum(tf.multiply(y_true[1:, :], y_pred[:-1, :]), axis=1)
             #portfolio_returns = (portfolio_values[1:] - portfolio_values[:-1]) / portfolio_values[:-1] 
             sharpe = tf.math.divide(tf.keras.backend.mean(portfolio_returns),tf.keras.backend.std(portfolio_returns))
-            print(y_true.shape, y_pred.shape)
-            print(sharpe)
-            return -sharpe, -tf.keras.backend.mean(portfolio_returns), tf.keras.backend.std(portfolio_returns)
+            
+            return -sharpe
 
         #Model is compiled
         model.compile(optimizer=Opt, loss= sharpe_loss)
