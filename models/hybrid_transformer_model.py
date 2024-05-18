@@ -87,7 +87,7 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
         Output = tf.keras.layers.Dense(self.outputShape, activation=tf.nn.softmax, name="Output")(X)
 
         # scaling for the constraints sum = 1
-        Output = tf.math.divide(Output, tf.reduce_sum(Output, axis = 1, keepdims=True))
+        #Output = tf.math.divide(Output, tf.reduce_sum(Output, axis = 1, keepdims=True))
 
         # clip the output for addressing weight bounds
         #Output = tf.clip_by_value(Output, clip_value_min = self.lb, clip_value_max = self.ub)
