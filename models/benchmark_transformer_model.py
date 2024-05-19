@@ -61,17 +61,14 @@ class TransformerBlock(tf.keras.layers.Layer):
 
 
 class Transformer_Portfolio(tf.keras.layers.Layer):
-    def __init__(self, shape1, shape2, outputShape, headsAttention, dropout, learningRate, priceData, ub, lb):
+    def __init__(self, shape1, shape2, outputShape, headsAttention, dropout, learningRate):
         self.shape1 = shape1
         self.shape2 = shape2
         self.outputShape = outputShape
         self.headsAttention = headsAttention
         self.dropout = dropout
         self.learningRate = learningRate
-        self.priceData = priceData
         self.model = None
-        self.ub = ub
-        self.lb = lb
 
     def Transformer_Model(self):
         #Model Structure is defined
