@@ -22,5 +22,8 @@ def sortino_ratio_df(returns_df):
     )
   return pd.Series(sortino_ratios, index = returns_df.columns)
 
+def max_drawdown_df(returns_df): 
+  return (returns_df.cummax() - returns_df.cumsum()).describe().loc['max']
+
 if __name__ == '__main__': 
   pass
