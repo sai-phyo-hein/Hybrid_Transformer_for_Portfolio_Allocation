@@ -73,9 +73,9 @@ class Transformer_Portfolio(tf.keras.layers.Layer):
     def Transformer_Model(self):
         #Model Structure is defined
         Input = tf.keras.Input(shape = (self.shape1, self.shape2), name = 'Input')
-        #LSTM is applied on top of the transformer
+        
         #Pos_Encoding is Used for Vanilla Transformer
-        #X = tf.keras.layers.LSTM(units = 16, dropout = Dropout, return_sequences = True)(Input)
+        
         #Transformer architecture is implemented
         transformer_block_1 = TransformerBlock(embed_dim = 34, num_heads=self.headsAttention, ff_dim = 8, rate = self.dropout, )
         X = transformer_block_1(Input)
@@ -85,12 +85,6 @@ class Transformer_Portfolio(tf.keras.layers.Layer):
         X = tf.keras.layers.Dense(8, activation=tf.nn.sigmoid)(X)
         X = tf.keras.layers.Dropout(self.dropout)(X)
         Output = tf.keras.layers.Dense(self.outputShape, activation=tf.nn.softmax, name="Output")(X)
-
-        # scaling for the constraints sum = 1
-        #Output = tf.math.divide(Output, tf.reduce_sum(Output, axis = 1, keepdims=True))
-
-        # clip the output for addressing weight bounds
-        #Output = tf.clip_by_value(Output, clip_value_min = self.lb, clip_value_max = self.ub)
 
         model = tf.keras.Model(inputs=Input, outputs=Output)
         #Optimizer is defined
@@ -102,7 +96,6 @@ class Transformer_Portfolio(tf.keras.layers.Layer):
             portfolio_returns = tf.reduce_sum(tf.multiply(y_true, y_pred), axis=1)
             #portfolio_returns = (portfolio_values[1:] - portfolio_values[:-1]) / portfolio_values[:-1] 
             sharpe = tf.math.divide(tf.keras.backend.mean(portfolio_returns),tf.keras.backend.std(portfolio_returns))
-        
             return -sharpe
 
         #Model is compiled
