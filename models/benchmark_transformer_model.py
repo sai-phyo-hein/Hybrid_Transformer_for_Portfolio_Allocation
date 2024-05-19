@@ -122,4 +122,17 @@ class Transformer_Portfolio(tf.keras.layers.Layer):
                 print('Model is not trained.')
             else: 
                 return self.model.predict(xtestRNN)
+    def vanilla_save_weights(self, path): 
+        return self.model.save_weights(path)
+
+    def vanilla_load_weights(self, path): 
+        if self.model == None:
+            self.model = self.Transformer_Model()
+            self.model.load_weights(path)
+        else: 
+            self.model.load_weights(path)
+
+if __name__ == '__main__':
+    pass
+
 
