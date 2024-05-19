@@ -77,7 +77,7 @@ class Transformer_Portfolio(tf.keras.layers.Layer):
         #Pos_Encoding is Used for Vanilla Transformer
         #X = tf.keras.layers.LSTM(units = 16, dropout = Dropout, return_sequences = True)(Input)
         #Transformer architecture is implemented
-        transformer_block_1 = TransformerBlock(embed_dim = 34, num_heads=self.headsAttention, ff_dim = 8, rate = self.dropout, )
+        transformer_block_1 = TransformerBlock(embed_dim = 272, num_heads=self.headsAttention, ff_dim = 8, rate = self.dropout, )
         X = transformer_block_1(Input)
 
         #Dense layers are used
