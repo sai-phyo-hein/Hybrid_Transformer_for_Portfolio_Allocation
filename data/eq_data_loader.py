@@ -8,14 +8,17 @@ def get_eq_data(data_path, start, end, corr_thresh, market_cap_filter):
     A function that select the equities out of nifty50 based on these criteria: 
         - equity is traded during selected date range and no blank
         - all selected equities have mutual correlation less than a threshold
-        
-    @param data_path: path to a csv file listing all available stocks and related information
-    @param start: start date of data to retreive
-    @param end: end date of data to retreive
-    @param corr_thresh: correlation threshold for stock selection
-    @param market_cap_filter: number of stocks to select from top market caps
-    @return: dataframe: a dataframe of price data of selected stocks
+    -----------------------------------------------
+    Input: 
+        datapath (string) : path to list of tickers with related informations
+        start (string) : data start date yyyy-mm-dd
+        end (string) : data end date yyyy-mm-dd
+        corr_thresh (float) : correlation threshold for filtering 
+        market_cap_filter (int) : top market cap count for filtering
     
+    Returns: 
+        dataframe : dataframe of prices of selected tickers
+        
     """
     nf_50_tickers_df = pd.read_csv(data_path)[['Industry', 'Symbol']]
     nf_50_tickers_df.Symbol = nf_50_tickers_df.Symbol + '.NS'
