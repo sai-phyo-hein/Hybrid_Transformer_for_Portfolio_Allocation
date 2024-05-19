@@ -3,14 +3,37 @@ import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 
-# Function to calculate portfolio mean return and variance
+# 
 def portfolio_stats(weights, mean_returns, cov_matrix):
+    """
+    Function to calculate portfolio mean return and variance
+    --------------------------------------------------------
+    Input:
+        weights (array) : weight allocation to the assets
+        mean_returns (array) : mean of the returns of the assets
+        cov_matrix (array) : covariance matrix of the returns of the assets
+    Return:
+        portfolio_return (float) : return of the weight allocated portfolio
+        portfolio_variance (float) : variance of the weight allocated portfolio
+    """
     portfolio_return = np.sum(mean_returns * weights)
     portfolio_variance = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
     return portfolio_return, portfolio_variance
 
 # Function to generate random portfolios
 def generate_random_portfolios(num_portfolios, mean_returns, cov_matrix, seed):
+    """
+    Function for simulating N of portfolios from randomly generated weights
+    ----------------------------------------------------------------------
+    Inputs: 
+        num_portfolios (int) : number of portfolio to simulate
+        mean_returns (array) : mean of the returns of the assets 
+        cov_matrix (array) : covariance matrix of the returns of the assets 
+        seed (int) : seeding for random number generator
+    Return: 
+        results (array) : array storing return, variance and sharpe ratio of generated portfolio
+        weights_record (array) : array storing generated random weights
+    """
     np.random.seed(seed)
     results = np.zeros((3, num_portfolios))
     weights_record = []
@@ -26,7 +49,14 @@ def generate_random_portfolios(num_portfolios, mean_returns, cov_matrix, seed):
 
 
 def mvp_mod(data, num_portfolios=10000, seed = 42):
-    
+    """
+    Function for getting portfolio weights of maximum sharpe
+    -------------------------------------------------------
+    Inputs: 
+        data (dataframe) : price data of assets
+        num_portfolios (int) : number of portfolio to simulate
+        seed (int) : seeding for random number generator
+    """
     # Calculate mean returns and covariance matrix
     mean_returns = data.pct_change().dropna().mean()
     cov_matrix = data.pct_change().dropna().cov()
@@ -36,35 +66,7 @@ def mvp_mod(data, num_portfolios=10000, seed = 42):
     max_sharpe_idx = np.argmax(results[2])
     optimal_weights = weights[max_sharpe_idx]
 
-    return optimal_weights
-
-def mvp_plotting(results, optimal_weights, mean_returns, cov_matrix): 
-    # Plot the efficient frontier
-    print("*****************************************************************************************************************")
-    print("*******************************Efficient Frontier & Maximum Sharpe Ratio Portfolio*******************************")
-    plt.scatter(results[1,:], results[0,:], c=results[2,:], cmap='viridis')
-    plt.colorbar(label='Sharpe Ratio')
-    plt.xlabel('Volatility')
-    plt.ylabel('Return')
-    plt.scatter(results[1,max_sharpe_idx], results[0,max_sharpe_idx], marker='*', color='r', s=300, label='Max Sharpe Ratio')
-    plt.legend()
-    plt.title('Efficient Frontier')
-    plt.show()
-    
-
-    print("******************************************************************************************************************")
-    print("Weights for Maximum Sharpe Ratio Portfolio")
-    print("Optimal Weights:", optimal_weights)
-    print("******************************************************************************************************************")
-    print("Expected Return of the Maximum Sharpe Ratio Portfolio")
-    print(f"Expected Return of Portfolio : {portfolio_stats(optimal_weights, mean_returns, cov_matrix)[0]*100}")
-    print("******************************************************************************************************************")
-    print("Expected Standard Deviation of Maximum Sharpe Ratio Portfolio")
-    print(f"Expected standard deviation of Portfolio : {portfolio_stats(optimal_weights, mean_returns, cov_matrix)[1]}")
-    print("******************************************************************************************************************")
-    
-    return optimal_weights
-    
+    return optimal_weights    
 
 if __name__ == '__main__':
     pass
