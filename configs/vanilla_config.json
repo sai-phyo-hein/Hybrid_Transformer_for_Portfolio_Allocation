@@ -1,9 +1,9 @@
 {
   "dropout" : 0.05,
-  "learning_rate" : 0.01, 
+  "learning_rate" : 0.0001, 
   "epochs" : 100, 
-  "batch_size" : 256, 
-  "num_heads" : 256, 
+  "batch_size" : 8, 
+  "num_heads" : 34, 
   "timestep" : 16, 
   "lag" : 1, 
   "lagSD" : 10, 
