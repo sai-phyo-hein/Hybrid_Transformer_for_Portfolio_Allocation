@@ -3,5 +3,6 @@
   "learning_rate" : 0.01, 
   "epochs" : 100, 
   "batch_size" : 256, 
-  "num_heads" : 256
+  "num_heads" : 256,
+  "timestep" : 4
 }
