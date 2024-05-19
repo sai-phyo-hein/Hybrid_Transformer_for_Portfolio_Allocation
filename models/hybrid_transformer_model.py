@@ -108,6 +108,8 @@ class HybridTransformer_Portfolio(tf.keras.layers.Layer):
         if self.model == None:
             self.model = self.Transformer_Model()
             self.model.fit(xtrainRNN, ytrainRNN, epochs = Epochs, verbose = 0, batch_size = BatchSize)
+        else: 
+            self.model.fit(xtrainRNN, ytrainRNN, epochs = Epochs, verbose = 0, batch_size = BatchSize)
     
     def allocation_hybrid_test(self, xtestRNN):
             if self.model == None: 
