@@ -11,30 +11,16 @@ def portfolio_returns(returns, weights, rate):
       (returns.iloc[1:, :] * weights[1:-2, :]).sum(axis = 1) - rate * np.absolute(weights[1:-2, :] - weights[:-3, :]).sum(axis = 1)
   )
 
-def portfolio_values(price, weights):
-  return (
-      (price.iloc[1:, :] * (weights[:-1, :])).sum(axis = 1)
-  )
-
-def calculate_max_drawdown(prices):
+def sortino_ratio_df(returns_df): 
   """
-    Calculate the maximum drawdown for a time series of prices.
-  
-    Parameters:
-    prices (list or numpy array): A list or array of asset prices.
-  
-    Returns:
-    float: The maximum drawdown value.
   """
-  prices = np.asarray(prices)
-  # Calculate the cumulative maximum of the prices
-  cum_max = np.maximum.accumulate(prices)
-  # Calculate the drawdown
-  drawdown = (prices - cum_max) / cum_max
-  # Find the maximum drawdown
-  max_drawdown = np.min(drawdown)
-  
-  return max_drawdown
+  sortino_ratios = [] 
+  for col in returns_df.columns: 
+    downside_returns = returns_df[returns_df[col] < 0][col]
+    sortino_ratios.append(
+      returns_df[col].mean() / downside_returns.std()
+    )
+  return pd.Series(sortino_ratios, index = returns_df.columns)
 
 if __name__ == '__main__': 
   pass
