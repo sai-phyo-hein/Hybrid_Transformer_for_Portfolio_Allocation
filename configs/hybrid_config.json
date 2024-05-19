@@ -4,5 +4,9 @@
   "epochs" : 100, 
   "batch_size" : 256, 
   "num_heads" : 256,
-  "timestep" : 4
+  "timestep" : 4, 
+  "lag" : 1, 
+  "lagSD" : 10, 
+  "test_size" : 0.2, 
+  "purge_size" : 30
 }
